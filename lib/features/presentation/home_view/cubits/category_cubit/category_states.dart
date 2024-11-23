@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 abstract class CategoryStates {}
 
 class CategoryInitial extends CategoryStates {}
@@ -25,3 +27,17 @@ class UpdateCategoryLoading extends CategoryStates {}
 class UpdateCategorySuccess extends CategoryStates {}
 
 class UpdateCategoryFailure extends CategoryStates {}
+
+class UploadImageLoading extends CategoryStates {}
+
+class UploadImageSuccess extends CategoryStates {
+  final XFile xFile;
+
+  UploadImageSuccess({required this.xFile});
+}
+
+class UploadImageFailure extends CategoryStates {
+  final String error;
+
+  UploadImageFailure({required this.error});
+}

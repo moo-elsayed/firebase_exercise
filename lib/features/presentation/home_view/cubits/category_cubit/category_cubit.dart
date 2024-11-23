@@ -3,10 +3,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:image_picker/image_picker.dart';
 
 import 'category_states.dart';
-
 
 class CategoryCubit extends Cubit<CategoryStates> {
   CategoryCubit() : super(CategoryInitial()) {
@@ -88,6 +87,40 @@ class CategoryCubit extends Cubit<CategoryStates> {
         emit(UpdateCategoryFailure());
       });
       */
+    }
+  }
+
+  Future<void> captureImage() async {
+    emit(UploadImageLoading());
+    try {
+      final ImagePicker picker = ImagePicker();
+      // Capture a photo.
+      final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+      if (photo != null) {
+        emit(UploadImageSuccess(xFile: photo));
+      } else {
+        emit(UploadImageFailure(error: 'image == null'));
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(UploadImageFailure(error: e.toString()));
+    }
+  }
+
+  Future<void> pickImage() async {
+    emit(UploadImageLoading());
+    try {
+      final ImagePicker picker = ImagePicker();
+      // Pick an image.
+      final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
+      if (photo != null) {
+        emit(UploadImageSuccess(xFile: photo));
+      } else {
+        emit(UploadImageFailure(error: 'image == null'));
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(UploadImageFailure(error: e.toString()));
     }
   }
 }
