@@ -25,10 +25,10 @@ class CustomNoteFloatingActionButton extends StatefulWidget {
 class _CustomNoteFloatingActionButtonState
     extends State<CustomNoteFloatingActionButton> {
   @override
-  void dispose() {
-    // widget.textEditingController.dispose();
-    //widget.followersController.dispose();
-    super.dispose();
+  void initState() {
+    widget.textEditingController.text = '';
+    widget.followersController.text = '';
+    super.initState();
   }
 
   @override
@@ -37,18 +37,16 @@ class _CustomNoteFloatingActionButtonState
         backgroundColor: Constants.mainColor,
         shape: const CircleBorder(),
         onPressed: () {
-          addNoteDialog(context);
+          addWrestlerDialog(context);
         },
         child: const Icon(
           Icons.add,
         ));
   }
 
-  void addNoteDialog(BuildContext context) {
+  void addWrestlerDialog(BuildContext context) {
     AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
     final GlobalKey<FormState> formKey = GlobalKey();
-    widget.textEditingController.text = '';
-    widget.followersController.text = '';
     bool isFollowedByMe = false;
     showDialog(
         context: context,
